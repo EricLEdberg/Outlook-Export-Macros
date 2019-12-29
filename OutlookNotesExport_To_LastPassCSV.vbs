@@ -5,7 +5,7 @@
 
 Public Sub ExportNotesToLastPassSecureNoteCSV()
 
-    DoCheck = False
+    DoCheck = True
     GenericHeader = "url,username,password,extra,name,grouping,fav" 
 
     '# -----------------------------------------------------------------------
