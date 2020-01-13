@@ -13,7 +13,7 @@ Export Outlook Contacts Into Individual .VCF Files
 
 It will:
 
--  Create an underlying directory structure:   C:\OutlookContactsExport\%COMPUTERNAME%\%MMDDYY%
+-  Create an underlying directory structure:   C:\\OutlookContactsExport\\%COMPUTERNAME%\\%MMDDYY%
 -  Prompt you to select the CONTACTS folder to export
 -  Create a individual .VCF files (one per contact) in the folder
 
@@ -24,6 +24,6 @@ This is the initial release of the code after I used it to successfully export 4
 
 It will:
 
--  Create an underlying directory structure:   C:\OutlookNotesExport\%COMPUTERNAME%\%MMDDYY%
+-  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
 -  Prompt you to select the NOTES folder to export
 -  Create a single .CSV file in the folder suitable for importation into LastPass as a series of Secure Notes
