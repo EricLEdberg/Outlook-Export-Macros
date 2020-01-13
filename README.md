@@ -26,4 +26,13 @@ It will:
 
 -  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
 -  Prompt you to select the NOTES folder to export
--  Create a single .CSV file in the folder suitable for importation into LastPass as a series of Secure Notes
+-  Create a single .CSV file suitable for importation into LastPass as a series of Secure Notes
+
+# Export-OutlookNotes-To-XML
+Export Microsoft Outlook Notes Into XML
+
+It will:
+
+-  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
+-  Prompt you to select the NOTES folder to export
+-  Create a single .XML file containing all note informaton
