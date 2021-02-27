@@ -10,11 +10,9 @@ Basically:
 
 There are several macros in this repository:
 
-# Export-OutlookNotes-To-BitwardenCSV
+# Export Microsoft Outlook Notes Into Bitwarden CSV Import Format
 
-Export Microsoft Outlook Notes In Bitwarden CSV Import Format
-
-This macro will export all Notes in the selected folder into a single CSV file that can then be imported into Bitwarden as Secure Notes.  I routinely import 450+ notes into Bitwarden.
+This macro will export all Notes in the selected folder into a single CSV file that can be imported into Bitwarden as multiple Secure Notes.
 
 It will:
 
@@ -25,15 +23,15 @@ It will:
 
 # Export Microsoft Outlook Notes In LastPass Generic CSV Import Format
 
-This macro will export all Notes in the selected folder into a single CSV file that can then be imported into LastPass as multiple Secure Notes.  I routinely import 450+ notes into LastPass.
+This macro will export all Notes in the selected folder into a single CSV file that can be imported into LastPass as multiple Secure Notes.
 
 It will:
 
 -  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
 -  Prompt you to select the NOTES folder to export
 -  Create a single .CSV file suitable for importation into LastPass as a series of Secure Notes
-# Outlook_Export_Notes_To_Text_Files
-Export the selected Notes folder to individual text files
+
+# Export Microsoft Outlook Notes Into Individual Text Files
 
 It will:
 
@@ -41,8 +39,7 @@ It will:
 -  Prompt you to select the NOTES folder to export
 -  Create an individual files with the contents of every Outlook note
 
-# ExportOutlookContactsToVCF
-Export Outlook Contacts Into Individual .VCF Files
+# Export Microsoft Outlook Contacts Into Individual VCF Text Files
 
 It will:
 
@@ -50,19 +47,7 @@ It will:
 -  Prompt you to select the CONTACTS folder to export
 -  Create an individual .VCF files (one per contact) in the folder
 
-# Export-OutlookNotes-To-LastPassCSV
-Export Microsoft Outlook Notes In LastPass Generic CSV Import Format
-
-This macro will export all Notes in the selected folder into a single CSV file that can then be imported into LastPass as multiple Secure Notes.  I routinely import 450+ notes into LastPass.
-
-It will:
-
--  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
--  Prompt you to select the NOTES folder to export
--  Create a single .CSV file suitable for importation into LastPass as a series of Secure Notes
-
-# Export-OutlookNotes-To-XML
-Export Microsoft Outlook Notes Into A Common XML
+# Export Microsoft Outlook Notes Into A Single XML File
 
 It will:
 
