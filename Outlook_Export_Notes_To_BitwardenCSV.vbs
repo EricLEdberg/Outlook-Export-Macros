@@ -11,15 +11,35 @@
 '#
 '#
 '# Author:   Eric L. Edberg   2/2021
-'#
+'# - Added ReplaceAccentChars() - 11/2021 ele
+'# - Added support for multi-page notes that exceed 1000 Bitwarden import limit - 11/2021 ele
 '# -----------------------------------------------------------------------
 
+'# -----------------------------------------------------------------------
+'# Replace accented characters.  May not be the right or efficient way :-(
+'# https://www.extendoffice.com/documents/excel/707-excel-replace-accented-characters.html
+'# -----------------------------------------------------------------------
+Function ReplaceAccentChars(thestring)
+    Dim A As String * 1
+    Dim B As String * 1
+    Dim i As Integer
+    Const AccChars = "ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ"
+    Const RegChars = "SZszYAAAAAACEEEEIIIIDNOOOOOUUUUYaaaaaaceeeeiiiidnooooouuuuyy"
+    For i = 1 To Len(AccChars)
+        A = Mid(AccChars, i, 1)
+        B = Mid(RegChars, i, 1)
+        thestring = replace(thestring, A, B)
+    Next
+    ReplaceAccentChars = thestring
+End Function
+
+'# -----------------------------------------------------------------------
+'# -----------------------------------------------------------------------
 Public Sub ExportNotesToBitwardenCSV()
 
     DoCheck = False
     GenericHeader = "folder,favorite,type,name,notes,fields,login_uri,login_username,login_password,login_totp"
     
-
     '# -----------------------------------------------------------------------
     '# this section is common and should be a common function
     '# -----------------------------------------------------------------------
@@ -86,21 +106,16 @@ Public Sub ExportNotesToBitwardenCSV()
     For cnt = 1 To myNote.Items.Count
     
         '# Subject is 1st line of the note Body
-        xSubject = Replace(Replace(Replace(myNote.Items(cnt).Subject, "/", "-"), "\", "-"), ":", "-")
+        xSubject = replace(replace(replace(myNote.Items(cnt).Subject, "/", "-"), "\", "-"), ":", "-")
         xSubject = Trim(xSubject)
         
         '# Double Quote Quote character
         xBody = myNote.Items(cnt).Body
-        xBody = Replace(xBody, Chr(34), Chr(34) & Chr(34))
-        
-        '# Bitwarden only supports 1000 characters during import
-        xLen = Len(xBody)
-        If (xLen > 1000) Then
-            xMessage = xMessage & vbCrLf & "TOLONG(" & xLen & ") TRUNCGATING to 1000 Chars: " & xSubject
-            xBody = Left(xBody, 1000)
-        End If
-        
-             
+        xBody = replace(xBody, Chr(34), Chr(34) & Chr(34))
+                 
+        '# Remove well-known accented characters not supported by Import
+        xBody = ReplaceAccentChars(xBody)
+                
         '# Secure Notes import CSV layout from Bitwarden
         '# folder,favorite,type,name,notes,fields,login_uri,login_username,login_password,login_totp
         '# ,,note,My Note,"This is a secure note.",,,,,
@@ -112,8 +127,40 @@ Public Sub ExportNotesToBitwardenCSV()
         xNote = """" & xBody & """" & ","
         xExtra = ",,,,"
         
-        Print #1, xFolder; xFavorite; xType; xName; xNote; xExtra; "0"
-                                    
+        '# Bitwarden only supports 1000 characters during import
+        xPageLen = 1000
+        xLen = Len(xBody)
+        
+        '# Split text into multiple secure notes
+        '# Append the "current page" counter to note file name
+        msg = ""
+        If (xLen > xPageLen) Then
+            xTxt = xBody
+            xTotPages = Int((xLen / xPageLen)) + 1
+            
+            xMessage = xMessage & "MULTIPAGE:" & xName & " (" & xTotPages & ")" & vbCrLf
+            
+            For xCurPage = 0 To xTotPages - 1
+                xLen = Len(xTxt)
+                xPage = Left(xTxt, xPageLen)
+                
+                If (xCurPage > 0) Then
+                    xName = xSubject & "-" & xCurPage & ","
+                End If
+                xNote = """" & xPage & """" & ","
+                
+                Print #1, xFolder; xFavorite; xType; xName; xNote; xExtra; "0"
+                                
+                xTxt = Mid(xTxt, xPageLen + 1, xLen)
+            Next
+        
+        
+        '# Create 1 secure note which is normal
+        Else
+            
+            Print #1, xFolder; xFavorite; xType; xName; xNote; xExtra; "0"
+            
+        End If
         
 '        If cnt = 3 Then
 '            Close #1
@@ -127,6 +174,7 @@ Public Sub ExportNotesToBitwardenCSV()
     Close #1
     
     If (Not IsEmpty(xMessage)) Then
+        '# Issue:  only first 1024 characters are shown.  The rest are truncated.
         MsgBox xMessage
     End If
     

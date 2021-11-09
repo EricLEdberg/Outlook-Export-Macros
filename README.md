@@ -19,7 +19,8 @@ It will:
 -  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
 -  Prompt you to select the notes folder to export
 -  Create a single .CSV file suitable for importation into Bitwarden as a series of Secure Notes
--  Bitwarden limits the length when importing secure notes to 1000 characters.  Outlook notes that exceed 1000 characters will be trucated.  A warning message will itentify truncated notes on completion.
+-  Replace accented characters which are not supported by Bitwarden import
+-  Bitwarden limits Secure Note import length to 1000 characters.  When creating multi-page notes, it will split an Outlook Note into 1000 character chunks and create seperate Bitwarden Secure Notes using the current page counter appended to the note name.
 
 # Export Microsoft Outlook Notes In LastPass Generic CSV Import Format
 
