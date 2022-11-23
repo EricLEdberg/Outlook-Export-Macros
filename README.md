@@ -5,22 +5,24 @@ The macros are an easy read.
 Basically:
 
 - Start Outlook, type "macros" in the search box and enable macros by accepting the security pop-up
-- Create a new macro.  Copy & paste the VBScript code into the editor window
+- Type "macros" into search again and create a new macro
+- Copy & paste the VBScript code into the editor window
 - Execute the macro by clicking the Green right arrow in the macro editor or using the macro menu
 
 There are several macros in this repository:
 
-# Export Microsoft Outlook Notes Into Bitwarden CSV Import Format
+# Export A Microsoft Outlook Notes Folder Into Bitwarden CSV Import Format
 
-This macro will export all Notes in the selected folder into a single CSV file that can be imported into Bitwarden as multiple Secure Notes.
+This macro will export all Outlook Notes in the selected folder into a single CSV file that can be imported into Bitwarden as multiple Secure Notes.
 
 It will:
 
--  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%
--  Prompt you to select the notes folder to export
+-  Create an underlying directory structure:   C:\\OutlookNotesExport\\%COMPUTERNAME%\\%MMDDYY%, to store export data
+-  Prompt you to select the Outlook notes folder to export
+-  Prompt for the name of the Bitwarden folder where imported secure notes will reside.  It is wise to input a new unique folder name and manually move the notes into other folders.  Note that the Bitwarden import process will not overwrite secure notes with the same name and blindly create duplicate items with the same name.
 -  Create a single .CSV file suitable for importation into Bitwarden as a series of Secure Notes
 -  Replace accented characters which are not supported by Bitwarden import
--  Bitwarden limits Secure Note import length to 1000 characters.  When creating multi-page notes, it will split an Outlook Note into 1000 character chunks and create seperate Bitwarden Secure Notes using the current page counter appended to the note name.
+-  Bitwarden limits Secure Note import length to 10000 characters.  When creating multi-page notes, it will split an Outlook Note into 9999 character chunks and create seperate Bitwarden Secure Notes using a page counter appended to the note name.
 
 # Export Microsoft Outlook Notes In LastPass Generic CSV Import Format
 
